@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ProductShowcase } from "@/components/product-showcase";
 
 export const metadata: Metadata = {
-  title: "Hazmat | SavvyMoney Test",
+  title: "Hazmat",
 };
 
 export default function HazmatPage() {

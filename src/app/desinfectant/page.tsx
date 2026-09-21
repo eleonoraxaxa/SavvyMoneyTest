@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ProductShowcase } from "@/components/product-showcase";
 
 export const metadata: Metadata = {
-  title: "Desinfectant | SavvyMoney Test",
+  title: "Desinfectant",
 };
 
 export default function DesinfectantPage() {

@@ -12,7 +12,7 @@ const roboto = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Hygiene essentials | SavvyMoney Test",
+  title: "Hygiene essentials",
   description: "Explore Hazmat, Soap, Paper, and Desinfectant in an illustrated product showcase.",
 };
 
