@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import { ApiMockingProvider } from "@/components/api-mocking-provider";
 import { AppProviders } from "@/components/app-providers";
 import "./globals.css";
 
@@ -28,7 +29,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <body className={roboto.variable}>
-        <AppProviders>{children}</AppProviders>
+        <ApiMockingProvider>
+          <AppProviders>{children}</AppProviders>
+        </ApiMockingProvider>
       </body>
     </html>
   );

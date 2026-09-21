@@ -2,12 +2,10 @@ import { useEffect, useState } from "react";
 
 type ApiMockingStatus = "pending" | "ready" | "error";
 
-const isApiMockingEnabled = process.env.NEXT_PUBLIC_API_MOCKING !== "false";
-
 let mockingPromise: Promise<void> | undefined;
 
 function enableApiMocking() {
-  if (!isApiMockingEnabled || typeof window === "undefined") {
+  if (typeof window === "undefined") {
     return Promise.resolve();
   }
 
@@ -19,15 +17,9 @@ function enableApiMocking() {
 }
 
 export function useApiMocking(): ApiMockingStatus {
-  const [status, setStatus] = useState<ApiMockingStatus>(
-    isApiMockingEnabled ? "pending" : "ready",
-  );
+  const [status, setStatus] = useState<ApiMockingStatus>("pending");
 
   useEffect(() => {
-    if (!isApiMockingEnabled) {
-      return;
-    }
-
     let isMounted = true;
 
     enableApiMocking()
