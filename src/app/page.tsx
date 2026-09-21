@@ -1,5 +1,5 @@
-import { ProductShowcase } from "@/components/product-showcase";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return <ProductShowcase />;
+  redirect("/soap");
 }

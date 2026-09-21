@@ -11,7 +11,7 @@ npm ci
 npm run dev
 ```
 
-Open [localhost:3000](http://localhost:3000).
+Open [localhost:3000](http://localhost:3000). The root URL redirects to the Soap page.
 
 ```sh
 npm run lint
@@ -24,29 +24,30 @@ The lockfile is included for reproducible installs. ESLint 9 is retained because
 
 ## Behavior and design
 
-- Soap is selected on initial load. Selecting Hazmat, Soap, Paper, or Desinfectant updates the heading, illustration, and selected background using local state. Reloading resets the selection to Soap.
+- Hazmat, Soap, Paper, and Desinfectant are four separate App Router pages at `/hazmat`, `/soap`, `/paper`, and `/desinfectant`. The root URL redirects to `/soap`.
+- The bottom navigation uses links, so every selection updates the URL and supports direct visits, refreshes, browser history, and Next.js prefetching. The current page is exposed with `aria-current="page"`.
 - The supplied design contains one 375 × 812 mobile artboard. Its original vectors, Roboto typography, white canvas, and peach-to-yellow selected background are reused. The other category views and wider layouts extend that composition.
 - The label “Desinfectant” follows the spelling in the supplied design. Its longer heading uses a smaller mobile font to fit on one line.
 - Layout dimensions, spacing, typography, and breakpoints use `em`. Percentages handle fluid widths, while `100svh` and safe-area insets handle mobile browser chrome and notches. SVG view boxes use their original unitless coordinates.
 - Wider layouts enlarge the illustration at `48em` and `75em`. Short screens use a smaller illustration below `42em` in height. Very short landscape screens scroll vertically instead of clipping content.
-- Category controls implement the ARIA tabs pattern, including arrow keys with wrapping, Home/End, a single tab stop, linked panels, and visible focus. Illustrations have descriptions; navigation icons are decorative because their text labels already name the controls. Motion respects reduced-motion preferences.
+- Category links use semantic navigation, visible keyboard focus, and page-specific document titles. Illustrations have descriptions; navigation icons are decorative because their text labels already name the links. Motion respects reduced-motion preferences.
 - Content, illustrations, and fonts are served locally. There is no backend, account flow, or runtime dependency on Adobe or Google Fonts.
 
 ## Structure
 
 ```text
-src/app/                       Root layout, home page, global styles, and icon
-src/components/                Interactive showcase and scoped responsive styles
+src/app/                       Root redirect, four product pages, global styles, and icon
+src/components/                Shared product presentation and scoped responsive styles
 src/data/products.ts           Typed local category content
 src/assets/fonts/              Roboto Medium/Bold and SIL Open Font License
 public/images/                 Original design illustrations as standalone SVGs
 ```
 
-Only the interactive showcase is a Client Component; the layout and page remain Server Components. The home route is prerendered during the production build.
+All routes and presentation components are Server Components. The four product routes are prerendered during the production build.
 
 ## Verification
 
-Browser checks covered all four categories at 320 × 568, 375 × 812, 768 × 1024, 1440 × 900, and 812 × 375. Checks verified a single selected tab and visible panel, matching headings, loaded illustrations, touch target widths, and no horizontal overflow. Keyboard checks covered Left/Right, wraparound, Home/End, and matching keyboard focus.
+Browser checks covered all four routes at 320 × 568, 375 × 812, 768 × 1024, 1440 × 900, and 812 × 375. Checks verified route-specific URLs, headings and titles, one current-page link, loaded illustrations, touch target widths, and no horizontal overflow. Keyboard checks verified that every navigation link is reachable and has a visible focus style.
 
 These were live browser checks, not a committed automated test suite. Linting, TypeScript checking, and the production build are available through the commands above. Physical-device and cross-browser testing remain separate checks.
 

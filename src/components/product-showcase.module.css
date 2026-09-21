@@ -20,10 +20,6 @@
   padding-inline: 1em;
 }
 
-.panel[hidden] {
-  display: none;
-}
-
 .title {
   margin: 0;
   font-size: 4em;
@@ -76,14 +72,16 @@
   background: transparent;
   color: inherit;
   cursor: pointer;
+  text-decoration: none;
   -webkit-tap-highlight-color: transparent;
 }
 
-.tab[aria-selected="true"] {
+.tab[aria-current="page"] {
   background: linear-gradient(180deg, var(--color-peach), var(--color-yellow));
 }
 
 .tab:focus-visible {
+  outline: 0.1875em solid var(--color-ink);
   outline-offset: -0.25em;
 }
 
@@ -113,7 +111,7 @@
 }
 
 @media (hover: hover) {
-  .tab:not([aria-selected="true"]):hover {
+  .tab:not([aria-current="page"]):hover {
     background: #fff6d9;
   }
 }
@@ -170,7 +168,7 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .panel:not([hidden]) .productImage {
+  .productImage {
     animation: appear 180ms ease-out;
   }
 
@@ -181,7 +179,7 @@
 }
 
 @media (forced-colors: active) {
-  .tab[aria-selected="true"] {
+  .tab[aria-current="page"] {
     outline: 0.125em solid Highlight;
     outline-offset: -0.125em;
   }
