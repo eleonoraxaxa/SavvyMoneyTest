@@ -1,0 +1,142 @@
+.page {
+  display: grid;
+  min-height: 38em;
+  min-height: 100svh;
+  place-items: center;
+  overflow: hidden;
+  padding: max(2em, env(safe-area-inset-top)) max(1em, env(safe-area-inset-right))
+    max(2em, env(safe-area-inset-bottom)) max(1em, env(safe-area-inset-left));
+  background:
+    radial-gradient(circle at 12% 18%, var(--color-yellow) 0 3.5em, transparent 3.6em),
+    radial-gradient(circle at 88% 78%, var(--color-peach) 0 5em, transparent 5.1em),
+    var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-roboto), Arial, sans-serif;
+  font-weight: 500;
+}
+
+.content {
+  width: min(100%, 30em);
+  text-align: center;
+}
+
+.page[data-embedded="true"] {
+  flex: 1;
+  min-height: 0;
+}
+
+.code {
+  margin: 0;
+  color: var(--color-peach);
+  font-size: 7em;
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+  text-shadow: 0.06em 0.06em 0 var(--color-yellow);
+}
+
+.title {
+  margin: 0.75em 0 0;
+  font-size: 2em;
+  line-height: 1.2;
+}
+
+.description {
+  max-width: 27em;
+  margin: 1em auto 0;
+  font-size: 1em;
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75em;
+  margin-top: 2em;
+}
+
+.actions a,
+.actions button {
+  min-width: 10em;
+  padding: 0.875em 1.25em;
+  border: 0.125em solid var(--color-ink);
+  border-radius: 0.5em;
+  background: linear-gradient(180deg, var(--color-peach), var(--color-yellow));
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  line-height: 1.25;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.actions a:focus-visible,
+.actions button:focus-visible {
+  outline: 0.1875em solid var(--color-ink);
+  outline-offset: 0.25em;
+}
+
+.actions > :nth-child(n + 2) {
+  background: var(--color-paper);
+}
+
+.globalBody {
+  margin: 0;
+}
+
+@media (hover: hover) {
+  .actions a:hover,
+  .actions button:hover {
+    background: var(--color-yellow);
+  }
+}
+
+@media (min-width: 48em) {
+  .page {
+    background:
+      radial-gradient(circle at 18% 22%, var(--color-yellow) 0 5em, transparent 5.1em),
+      radial-gradient(circle at 82% 72%, var(--color-peach) 0 7em, transparent 7.1em),
+      var(--color-paper);
+  }
+
+  .code {
+    font-size: 9em;
+  }
+
+  .title {
+    font-size: 2.5em;
+  }
+}
+
+@media (max-height: 42em) {
+  .page {
+    padding-top: max(1em, env(safe-area-inset-top));
+    padding-bottom: max(1em, env(safe-area-inset-bottom));
+  }
+
+  .code {
+    font-size: 5em;
+  }
+
+  .title {
+    margin-top: 0.5em;
+    font-size: 1.75em;
+  }
+
+  .description {
+    margin-top: 0.75em;
+  }
+
+  .actions {
+    margin-top: 1.25em;
+  }
+}
+
+@media (forced-colors: active) {
+  .actions a,
+  .actions button {
+    background: ButtonFace;
+    color: ButtonText;
+  }
+}

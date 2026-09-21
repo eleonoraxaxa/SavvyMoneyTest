@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useProducts } from "@/hooks/use-products";
 import type { Product, ProductId } from "@/types/product";
+import { NotFoundPage } from "./not-found-page";
 import styles from "./product-showcase.module.css";
 
 type ProductShowcaseProps = {
@@ -36,15 +37,6 @@ function ProductError({ message, onRetry }: ProductErrorProps) {
       <button className={styles.retryButton} type="button" onClick={onRetry}>
         Try again
       </button>
-    </section>
-  );
-}
-
-function ProductNotFound() {
-  return (
-    <section className={`${styles.panel} ${styles.message}`}>
-      <h1>Product not found</h1>
-      <p>The requested product is not present in the server response.</p>
     </section>
   );
 }
@@ -87,7 +79,7 @@ export function ProductShowcase({ selectedId }: ProductShowcaseProps) {
   }
 
   if (!selectedProduct) {
-    return <ProductNotFound />;
+    return <NotFoundPage embedded />;
   }
 
   return <ProductDetails product={selectedProduct} />;
