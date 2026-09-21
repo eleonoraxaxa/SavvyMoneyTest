@@ -80,6 +80,10 @@
   background: linear-gradient(180deg, var(--color-peach), var(--color-yellow));
 }
 
+.tab[aria-current="page"] .tabLabel {
+  font-weight: 700;
+}
+
 .tab:focus-visible {
   outline: 0.1875em solid var(--color-ink);
   outline-offset: -0.25em;
@@ -112,7 +116,7 @@
 
 @media (hover: hover) {
   .tab:not([aria-current="page"]):hover {
-    background: #fff6d9;
+    background: linear-gradient(180deg, var(--color-peach), var(--color-yellow));
   }
 }
 

@@ -51,6 +51,21 @@ Browser checks covered all four routes at 320 × 568, 375 × 812, 768 × 1024, 1
 
 These were live browser checks, not a committed automated test suite. Linting, TypeScript checking, and the production build are available through the commands above. Physical-device and cross-browser testing remain separate checks.
 
+## Accessibility
+
+The interface was reviewed against the applicable WCAG 2.2 Level AA criteria for this static four-page experience:
+
+- semantic landmarks, one `h1` per page, unique document titles, and an English document language;
+- descriptive main illustration alternatives and decorative navigation images with empty alternatives;
+- keyboard-accessible links with a visible 3px focus outline and `aria-current="page"` for the active destination;
+- a bold active label in addition to the gradient, so the current page is not conveyed by color alone;
+- navigation targets larger than the WCAG 2.2 AA 24 × 24 CSS pixel minimum at the tested sizes;
+- black text contrast of 10.77:1 on the peach end of the gradient, 16.74:1 on yellow, and 21:1 on white;
+- no horizontal overflow at the tested phone, tablet, desktop, and landscape sizes;
+- animation limited to users who have not requested reduced motion, plus forced-colors support for the active link.
+
+This review covers the current UI and does not replace testing with multiple screen readers, browser zoom configurations, and physical assistive devices before a production release.
+
 ## Assets
 
 The four illustrations were extracted from the vector paths in the user-provided Adobe XD artboard. No replacement illustrations were generated. Roboto is self-hosted under the included SIL Open Font License in `src/assets/fonts/OFL.txt`.
