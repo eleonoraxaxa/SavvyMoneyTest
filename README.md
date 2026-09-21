@@ -13,6 +13,9 @@ npm run dev
 
 Open [localhost:3000](http://localhost:3000). The root URL redirects to the Soap page.
 
+MSW API mocking is enabled by default. To make the app use a real `/api/products` endpoint,
+set `NEXT_PUBLIC_API_MOCKING=false` and restart the development server. See `.env.example`.
+
 ```sh
 npm run lint
 npm run typecheck
@@ -31,20 +34,22 @@ The lockfile is included for reproducible installs. ESLint 9 is retained because
 - Layout dimensions, spacing, typography, and breakpoints use `em`. Percentages handle fluid widths, while `100svh` and safe-area insets handle mobile browser chrome and notches. SVG view boxes use their original unitless coordinates.
 - Wider layouts enlarge the illustration at `48em` and `75em`. Short screens use a smaller illustration below `42em` in height. Very short landscape screens scroll vertically instead of clipping content.
 - Category links use semantic navigation, visible keyboard focus, and page-specific document titles. Illustrations have descriptions; navigation icons are decorative because their text labels already name the links. Motion respects reduced-motion preferences.
-- Content, illustrations, and fonts are served locally. There is no backend, account flow, or runtime dependency on Adobe or Google Fonts.
+- Product data is requested through TanStack Query from `/api/products`. MSW supplies the local response by default, so there is no required backend, account flow, or runtime dependency on Adobe or Google Fonts.
 
 ## Structure
 
 ```text
 src/app/(products)/            Shared product layout and four product pages
-src/app/                       Root redirect, root layout, global styles, and icon
-src/components/                Shared product presentation, navigation, and scoped styles
-src/data/products.ts           Typed local category content
+src/app/                       Root layout, error boundaries, redirect, global styles, and icon
+src/components/                Shared product presentation, navigation, providers, and scoped styles
+src/hooks/                     TanStack Query and API-mocking hooks
+src/mocks/                     MSW worker, handlers, and mock product data
+src/types/                     Product domain types
 src/assets/fonts/              Roboto Medium/Bold and SIL Open Font License
 public/images/                 Original design illustrations as standalone SVGs
 ```
 
-The route-group layout owns the common navigation while each page supplies only its product content. Pages, layouts, and product presentation remain Server Components; only the navigation is a small Client Component so it can mark the active child segment. The four product routes are prerendered during the production build.
+The route-group layout owns the common navigation while each page supplies only its product ID. Product presentation and navigation are Client Components because they consume the shared TanStack Query cache. The four product routes are prerendered during the production build.
 
 ## Verification
 
