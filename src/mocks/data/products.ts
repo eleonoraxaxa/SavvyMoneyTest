@@ -1,11 +1,6 @@
-export type Product = {
-  id: string;
-  name: string;
-  image: string;
-  imageDescription: string;
-};
+import type { Product } from "@/types/product";
 
-export const products = [
+export const mockProducts = [
   {
     id: "hazmat",
     name: "Hazmat",
@@ -31,5 +26,3 @@ export const products = [
     imageDescription: "Illustration of a blue disinfectant spray bottle with a pink cross.",
   },
 ] as const satisfies readonly Product[];
-
-export type ProductId = (typeof products)[number]["id"];

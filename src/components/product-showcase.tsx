@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
-import { products, type ProductId } from "@/data/products";
+import { useProducts } from "@/hooks/use-products";
+import type { ProductId } from "@/types/product";
 import styles from "./product-showcase.module.css";
 
 type ProductShowcaseProps = {
@@ -7,10 +10,42 @@ type ProductShowcaseProps = {
 };
 
 export function ProductShowcase({ selectedId }: ProductShowcaseProps) {
-  const selectedProduct = products.find((product) => product.id === selectedId);
+  const productsQuery = useProducts();
+  const selectedProduct = productsQuery.data?.find((product) => product.id === selectedId);
+
+  if (productsQuery.isPending) {
+    return (
+      <section className={styles.panel} aria-label="Loading product">
+        <div className={styles.titlePlaceholder} aria-hidden="true" />
+        <div className={styles.illustration}>
+          <div className={styles.imagePlaceholder} aria-hidden="true" />
+        </div>
+        <p className={styles.srOnly} role="status">
+          Loading product…
+        </p>
+      </section>
+    );
+  }
+
+  if (productsQuery.isError) {
+    return (
+      <section className={`${styles.panel} ${styles.message}`} aria-labelledby="product-error-title">
+        <h1 id="product-error-title">Products are unavailable</h1>
+        <p>{productsQuery.error.message}</p>
+        <button className={styles.retryButton} type="button" onClick={() => productsQuery.refetch()}>
+          Try again
+        </button>
+      </section>
+    );
+  }
 
   if (!selectedProduct) {
-    throw new Error(`Unknown product: ${selectedId}`);
+    return (
+      <section className={`${styles.panel} ${styles.message}`}>
+        <h1>Product not found</h1>
+        <p>The requested product is not present in the server response.</p>
+      </section>
+    );
   }
 
   return (

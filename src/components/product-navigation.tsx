@@ -3,15 +3,30 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
-import { products } from "@/data/products";
+import { useProducts } from "@/hooks/use-products";
 import styles from "./product-navigation.module.css";
 
 export function ProductNavigation() {
   const selectedSegment = useSelectedLayoutSegment();
+  const productsQuery = useProducts();
+
+  if (productsQuery.isPending) {
+    return (
+      <div className={styles.tabsPlaceholder} aria-hidden="true">
+        {Array.from({ length: 4 }, (_, index) => (
+          <span className={styles.tabPlaceholder} key={index} />
+        ))}
+      </div>
+    );
+  }
+
+  if (productsQuery.isError || productsQuery.data.length === 0) {
+    return null;
+  }
 
   return (
     <nav className={styles.tabs} aria-label="Product categories">
-      {products.map((product) => (
+      {productsQuery.data.map((product) => (
         <Link
           key={product.id}
           className={styles.tab}

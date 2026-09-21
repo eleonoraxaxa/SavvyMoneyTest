@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import { AppProviders } from "@/components/app-providers";
 import "./globals.css";
 
 const roboto = localFont({
@@ -26,7 +27,9 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={roboto.variable}>{children}</body>
+      <body className={roboto.variable}>
+        <AppProviders>{children}</AppProviders>
+      </body>
     </html>
   );
 }
