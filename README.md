@@ -1,0 +1,77 @@
+# SavvyMoney Test
+
+A responsive implementation of the supplied [Adobe XD design](https://xd.adobe.com/view/461545f4-16a4-4d0b-84cf-355f9144d524-1346/specs/), built with Next.js App Router, React, TypeScript, and CSS Modules.
+
+## Run locally
+
+Use Node.js 22 LTS or newer.
+
+```sh
+npm ci
+npm run dev
+```
+
+Open [localhost:3000](http://localhost:3000). The root URL redirects to the Soap page.
+
+MSW API mocking is enabled by default. To make the app use a real `/api/products` endpoint,
+set `NEXT_PUBLIC_API_MOCKING=false` and restart the development server. See `.env.example`.
+
+```sh
+npm run lint
+npm run typecheck
+npm run build
+npm start
+```
+
+The lockfile is included for reproducible installs. ESLint 9 is retained because the React rules bundled with this Next.js release are incompatible with ESLint 10.
+
+## Behavior and design
+
+- Hazmat, Soap, Paper, and Desinfectant are four separate App Router pages at `/hazmat`, `/soap`, `/paper`, and `/desinfectant`. The root URL redirects to `/soap`.
+- The bottom navigation uses links, so every selection updates the URL and supports direct visits, refreshes, browser history, and Next.js prefetching. The current page is exposed with `aria-current="page"`.
+- The supplied design contains one 375 × 812 mobile artboard. Its original vectors, Roboto typography, white canvas, and peach-to-yellow selected background are reused. The other category views and wider layouts extend that composition.
+- The label “Desinfectant” follows the spelling in the supplied design. Its longer heading uses a smaller mobile font to fit on one line.
+- Layout dimensions, spacing, typography, and breakpoints use `em`. Percentages handle fluid widths, while `100svh` and safe-area insets handle mobile browser chrome and notches. SVG view boxes use their original unitless coordinates.
+- Wider layouts enlarge the illustration at `48em` and `75em`. Short screens use a smaller illustration below `42em` in height. Very short landscape screens scroll vertically instead of clipping content.
+- Category links use semantic navigation, visible keyboard focus, and page-specific document titles. Illustrations have descriptions; navigation icons are decorative because their text labels already name the links. Motion respects reduced-motion preferences.
+- Product data is requested through TanStack Query from `/api/products`. MSW supplies the local response by default, so there is no required backend, account flow, or runtime dependency on Adobe or Google Fonts.
+
+## Structure
+
+```text
+src/app/(products)/            Shared product layout and four product pages
+src/app/                       Root layout, error boundaries, redirect, global styles, and icon
+src/components/                Shared product presentation, navigation, providers, and scoped styles
+src/hooks/                     TanStack Query and API-mocking hooks
+src/mocks/                     MSW worker, handlers, and mock product data
+src/types/                     Product domain types
+src/assets/fonts/              Roboto Medium/Bold and SIL Open Font License
+public/images/                 Original design illustrations as standalone SVGs
+```
+
+The route-group layout owns the common navigation while each page supplies only its product ID. Product presentation and navigation are Client Components because they consume the shared TanStack Query cache. The four product routes are prerendered during the production build.
+
+## Verification
+
+Browser checks covered all four routes at 320 × 568, 375 × 812, 768 × 1024, 1440 × 900, and 812 × 375. Checks verified route-specific URLs, headings and titles, one current-page link, loaded illustrations, touch target widths, and no horizontal overflow. Keyboard checks verified that every navigation link is reachable and has a visible focus style.
+
+These were live browser checks, not a committed automated test suite. Linting, TypeScript checking, and the production build are available through the commands above. Physical-device and cross-browser testing remain separate checks.
+
+## Accessibility
+
+The interface was reviewed against the applicable WCAG 2.2 Level AA criteria for this static four-page experience:
+
+- semantic landmarks, one `h1` per page, unique document titles, and an English document language;
+- descriptive main illustration alternatives and decorative navigation images with empty alternatives;
+- keyboard-accessible links with a visible 3px focus outline and `aria-current="page"` for the active destination;
+- a bold active label in addition to the gradient, so the current page is not conveyed by color alone;
+- navigation targets larger than the WCAG 2.2 AA 24 × 24 CSS pixel minimum at the tested sizes;
+- black text contrast of 10.77:1 on the peach end of the gradient, 16.74:1 on yellow, and 21:1 on white;
+- no horizontal overflow at the tested phone, tablet, desktop, and landscape sizes;
+- animation limited to users who have not requested reduced motion, plus forced-colors support for the active link.
+
+This review covers the current UI and does not replace testing with multiple screen readers, browser zoom configurations, and physical assistive devices before a production release.
+
+## Assets
+
+The four illustrations were extracted from the vector paths in the user-provided Adobe XD artboard. No replacement illustrations were generated. Roboto is self-hosted under the included SIL Open Font License in `src/assets/fonts/OFL.txt`.

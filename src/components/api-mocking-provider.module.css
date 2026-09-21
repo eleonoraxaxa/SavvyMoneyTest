@@ -1,0 +1,8 @@
+.loading {
+  display: grid;
+  min-height: 100svh;
+  place-items: center;
+  padding: 1em;
+  font-size: 1em;
+  text-align: center;
+}

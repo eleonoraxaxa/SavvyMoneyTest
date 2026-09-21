@@ -1,0 +1,122 @@
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5em;
+  width: 100%;
+  max-width: 23.4375em;
+  margin-inline: auto;
+  padding-inline: 0 0.75em;
+}
+
+.tabsPlaceholder {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5em;
+  width: 100%;
+  max-width: 23.4375em;
+  min-height: 7.125em;
+  margin-inline: auto;
+  padding-inline: 0 0.75em;
+}
+
+.tabPlaceholder {
+  border-radius: 0.5em 0.5em 0 0;
+  background: linear-gradient(90deg, #f3f3f3 25%, #ffffff 50%, #f3f3f3 75%);
+  background-size: 200% 100%;
+  animation: loading 1.2s ease-in-out infinite;
+}
+
+@keyframes loading {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75em;
+  min-width: 0;
+  min-height: 7.125em;
+  padding: 1.25em 0.125em 0.9375em;
+  border: 0;
+  border-radius: 0.5em 0.5em 0 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tab[aria-current="page"] {
+  background: linear-gradient(180deg, var(--color-peach), var(--color-yellow));
+}
+
+.tab[aria-current="page"] .tabLabel {
+  font-weight: 700;
+}
+
+.tab:focus-visible {
+  outline: 0.1875em solid var(--color-ink);
+  outline-offset: -0.25em;
+}
+
+.tabIcon {
+  display: block;
+  width: 3.2em;
+  height: 3.2em;
+  object-fit: contain;
+}
+
+.tabLabel {
+  max-width: 100%;
+  font-size: 0.6875em;
+  line-height: 1.4546;
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 23.4375em) {
+  .tabs {
+    gap: 0.9375em;
+  }
+
+  .tabsPlaceholder {
+    gap: 0.9375em;
+  }
+
+  .tabLabel {
+    font-size: 0.75em;
+    line-height: 1.3334;
+  }
+}
+
+@media (hover: hover) {
+  .tab:not([aria-current="page"]):hover {
+    background: linear-gradient(180deg, var(--color-peach), var(--color-yellow));
+  }
+}
+
+@media (min-width: 48em) {
+  .tabs {
+    max-width: 30em;
+    gap: 1.5em;
+  }
+
+  .tabsPlaceholder {
+    max-width: 30em;
+    gap: 1.5em;
+  }
+}
+
+@media (forced-colors: active) {
+  .tab[aria-current="page"] {
+    outline: 0.125em solid Highlight;
+    outline-offset: -0.125em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tabPlaceholder {
+    animation: none;
+  }
+}
