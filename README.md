@@ -36,14 +36,15 @@ The lockfile is included for reproducible installs. ESLint 9 is retained because
 ## Structure
 
 ```text
-src/app/                       Root redirect, four product pages, global styles, and icon
-src/components/                Shared product presentation and scoped responsive styles
+src/app/(products)/            Shared product layout and four product pages
+src/app/                       Root redirect, root layout, global styles, and icon
+src/components/                Shared product presentation, navigation, and scoped styles
 src/data/products.ts           Typed local category content
 src/assets/fonts/              Roboto Medium/Bold and SIL Open Font License
 public/images/                 Original design illustrations as standalone SVGs
 ```
 
-All routes and presentation components are Server Components. The four product routes are prerendered during the production build.
+The route-group layout owns the common navigation while each page supplies only its product content. Pages, layouts, and product presentation remain Server Components; only the navigation is a small Client Component so it can mark the active child segment. The four product routes are prerendered during the production build.
 
 ## Verification
 
